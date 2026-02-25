@@ -1,0 +1,574 @@
+cat > /mnt/user-data/outputs/sentinel-web-studio.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentinel Web Studio | Professional Web Design for Local Businesses</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=Syne+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#03050a;--surface:#080d16;--card:#0d1420;--blue:#2563ff;--blue2:#4f8aff;--blue3:#a0c4ff;--cyan:#00d4ff;--white:#eef2ff;--muted:#5a6a8a;--border:rgba(37,99,255,0.15);--border2:rgba(37,99,255,0.08)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+.cur{width:8px;height:8px;background:var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s}
+.cur-ring{width:32px;height:32px;border:1px solid rgba(37,99,255,.45);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s ease-out,top .1s ease-out,width .3s,height .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 5rem;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .4s}
+nav.scrolled{background:rgba(3,5,10,.97);backdrop-filter:blur(20px);padding:.9rem 5rem;border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:.8rem}
+.nav-brand-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;font-family:'Syne',sans-serif}
+.nav-brand-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.05em}
+.nav-brand-name span{color:var(--blue2)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;color:rgba(238,242,255,.55);font-size:.73rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:.6rem 1.5rem;font-weight:600!important;transition:background .3s,transform .2s!important}
+.nav-cta:hover{background:var(--blue2)!important;transform:translateY(-1px)}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 5rem;padding-top:80px}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,255,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.hero-grid-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,transparent 40%,var(--bg) 80%)}
+.hero-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,255,.08) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:glowPulse 6s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+.hero-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.05) 0%,transparent 65%);bottom:5%;right:10%;pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:750px}
+.hero-badge{display:inline-flex;align-items:center;gap:.7rem;background:rgba(37,99,255,.1);border:1px solid rgba(37,99,255,.25);padding:.45rem 1.1rem;margin-bottom:2.5rem;animation:fadeUp .8s ease both}
+.hero-badge-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-badge-text{font-family:'Syne Mono',monospace;font-size:.63rem;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(3.5rem,8vw,8rem);font-weight:800;line-height:.92;margin-bottom:1.5rem}
+.hero-title .l1{display:block;color:var(--white);animation:fadeUp .8s .05s ease both}
+.hero-title .l2{display:block;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeUp .8s .1s ease both}
+.hero-title .l3{display:block;color:var(--white);animation:fadeUp .8s .15s ease both}
+.hero-sub{font-size:1.03rem;line-height:1.8;color:rgba(238,242,255,.55);max-width:520px;margin-bottom:3.5rem;animation:fadeUp .8s .2s ease both}
+.hero-sub strong{color:var(--blue2);font-weight:600}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .25s ease both}
+.btn-primary{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2.2rem;background:linear-gradient(135deg,var(--blue),#1a4fd8);color:#fff;font-weight:700;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 30px rgba(37,99,255,.3);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue2),var(--cyan));opacity:0;transition:opacity .3s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(37,99,255,.4)}
+.btn-primary:hover::before{opacity:1}
+.btn-primary span{position:relative;z-index:1}
+.btn-secondary{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2.2rem;border:1px solid rgba(37,99,255,.4);color:var(--blue2);font-weight:600;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;transition:border-color .3s,background .3s,transform .3s}
+.btn-secondary:hover{border-color:var(--blue);background:rgba(37,99,255,.08);transform:translateY(-3px)}
+.hero-stats{position:absolute;right:5rem;bottom:5rem;z-index:2;display:flex;gap:3rem;animation:fadeUp .8s .4s ease both}
+.h-stat-num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.h-stat-lbl{font-family:'Syne Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;text-align:center}
+.marquee-wrap{background:linear-gradient(90deg,var(--blue),#1a4fd8,var(--blue));padding:.85rem 0;overflow:hidden;position:relative;z-index:2}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 28s linear infinite}
+.m-item{font-family:'Syne',sans-serif;font-size:.8rem;letter-spacing:.18em;color:#fff;padding:0 2rem;font-weight:700}
+.m-sep{opacity:.4}
+section{padding:8rem 5rem;position:relative;z-index:1}
+.s-label{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.s-label-bar{width:24px;height:2px;background:var(--blue)}
+.s-label-txt{font-family:'Syne Mono',monospace;font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--blue2)}
+.s-title{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);font-weight:800;line-height:.95;margin-bottom:1.5rem}
+.s-title span{background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.services{background:var(--surface)}
+.svc-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;margin-bottom:5rem}
+.svc-intro-note{font-size:.9rem;line-height:1.85;color:rgba(238,242,255,.5);padding-top:2rem;border-top:1px solid var(--border)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.svc-card{background:var(--card);border:1px solid var(--border2);padding:2.5rem;position:relative;overflow:hidden;transition:border-color .4s,transform .4s}
+.svc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,255,.04),transparent);opacity:0;transition:opacity .4s}
+.svc-card:hover{border-color:rgba(37,99,255,.4);transform:translateY(-6px)}
+.svc-card:hover::before{opacity:1}
+.svc-icon{font-size:2rem;margin-bottom:1.5rem}
+.svc-name{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.6rem}
+.svc-desc{font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+.svc-feats{list-style:none;margin-bottom:1.5rem}
+.svc-feats li{font-size:.77rem;color:rgba(238,242,255,.55);padding:.28rem 0;display:flex;align-items:center;gap:.6rem}
+.svc-feats li::before{content:'✓';color:var(--cyan);font-size:.62rem;font-weight:700;flex-shrink:0}
+.svc-price-wrap{border-top:1px solid var(--border);padding-top:1.2rem}
+.svc-from{font-family:'Syne Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.svc-amount{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.svc-period{font-size:.7rem;color:var(--muted)}
+.svc-popular{position:absolute;top:1.2rem;right:1.2rem;background:linear-gradient(135deg,var(--blue),var(--cyan));padding:.25rem .7rem;font-family:'Syne',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.pricing{background:var(--bg)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.price-card{background:var(--card);border:1px solid var(--border2);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:border-color .4s,transform .4s}
+.price-card.featured{border-color:rgba(37,99,255,.5);background:linear-gradient(160deg,#0d1420,#0a1228)}
+.price-card.featured::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(37,99,255,.08),transparent 60%)}
+.price-card:hover{transform:translateY(-5px);border-color:rgba(37,99,255,.4)}
+.price-badge{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--cyan));padding:.3rem .9rem;font-family:'Syne',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:1.5rem}
+.price-tier{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.5rem}
+.price-desc{font-size:.8rem;color:var(--muted);margin-bottom:2rem;line-height:1.6}
+.price-amount{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.5rem}
+.price-dollar{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.price-period{font-size:.78rem;color:var(--muted)}
+.price-note{font-size:.7rem;color:var(--muted);margin-bottom:2rem}
+.price-list{list-style:none;margin-bottom:2.5rem}
+.price-list li{font-size:.82rem;color:rgba(238,242,255,.65);padding:.55rem 0;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:.7rem}
+.price-list li::before{content:'✦';color:var(--blue2);font-size:.52rem;flex-shrink:0}
+.price-list li.no{color:var(--muted)}
+.price-list li.no::before{opacity:.3}
+.price-cta{display:block;text-align:center;padding:1rem;background:rgba(37,99,255,.12);border:1px solid var(--border);color:var(--blue2);font-weight:700;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;transition:background .3s,border-color .3s}
+.price-cta:hover{background:rgba(37,99,255,.25);border-color:rgba(37,99,255,.5)}
+.price-card.featured .price-cta{background:linear-gradient(135deg,var(--blue),#1a4fd8);border-color:transparent;color:#fff}
+.price-card.featured .price-cta:hover{background:linear-gradient(135deg,var(--blue2),var(--cyan))}
+.addons{background:var(--surface)}
+.addons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:4rem}
+.addon-card{background:var(--surface);padding:2rem 1.8rem;transition:background .3s}
+.addon-card:hover{background:var(--card)}
+.addon-icon{font-size:1.5rem;margin-bottom:1rem}
+.addon-name{font-family:'Syne',sans-serif;font-size:.93rem;font-weight:700;margin-bottom:.4rem}
+.addon-desc{font-size:.77rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.addon-price{font-family:'Syne Mono',monospace;font-size:.88rem;color:var(--blue2);font-weight:600}
+.process{background:var(--bg)}
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:5rem;position:relative}
+.process-steps::before{content:'';position:absolute;top:2.4rem;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--blue),var(--cyan),var(--blue),transparent)}
+.step{text-align:center;padding:0 1rem;position:relative}
+.step-num{width:50px;height:50px;background:var(--card);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--blue2);position:relative;z-index:1;transition:background .3s,border-color .3s}
+.step:hover .step-num{background:var(--blue);border-color:var(--blue);color:#fff}
+.step-title{font-family:'Syne',sans-serif;font-size:.93rem;font-weight:700;margin-bottom:.5rem}
+.step-desc{font-size:.77rem;color:var(--muted);line-height:1.6}
+.booking{background:var(--surface)}
+.booking-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;align-items:start}
+.booking-info-desc{font-size:.88rem;line-height:1.85;color:rgba(238,242,255,.55);margin-bottom:2rem}
+.booking-feats{list-style:none}
+.booking-feats li{display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border2)}
+.bf-icon{width:36px;height:36px;flex-shrink:0;background:rgba(37,99,255,.1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.bf-title{font-weight:600;color:var(--white);font-size:.83rem;margin-bottom:.2rem}
+.bf-txt{font-size:.78rem;line-height:1.6;color:rgba(238,242,255,.55)}
+.form-wrap{background:var(--card);border:1px solid var(--border);padding:3rem}
+.form-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:.4rem}
+.form-sub{font-size:.8rem;color:var(--muted);margin-bottom:2.5rem}
+.form-group{margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-label{font-family:'Syne Mono',monospace;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--blue2);display:block;margin-bottom:.5rem}
+.form-input,.form-select,.form-textarea{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-family:'Outfit',sans-serif;font-size:.87rem;padding:.9rem 1.1rem;outline:none;transition:border-color .3s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(37,99,255,.6)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted)}
+.form-select option{background:var(--card)}
+.form-textarea{resize:vertical;min-height:115px}
+.form-checks{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.check-item{display:flex;align-items:center;gap:.7rem;padding:.7rem;border:1px solid var(--border2);cursor:pointer;transition:border-color .3s,background .3s}
+.check-item:hover{border-color:rgba(37,99,255,.35);background:rgba(37,99,255,.04)}
+.check-item input{accent-color:var(--blue);width:14px;height:14px;cursor:pointer}
+.check-item label{font-size:.77rem;color:rgba(238,242,255,.7);cursor:pointer}
+.form-submit{width:100%;padding:1.1rem;background:linear-gradient(135deg,var(--blue),#1a4fd8);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .3s,transform .3s;margin-top:2rem;position:relative;overflow:hidden}
+.form-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue2),var(--cyan));opacity:0;transition:opacity .3s}
+.form-submit:hover{transform:translateY(-2px)}
+.form-submit:hover::before{opacity:1}
+.form-submit span{position:relative;z-index:1}
+.form-success{display:none;text-align:center;padding:3rem}
+.form-success-icon{font-size:3rem;margin-bottom:1rem}
+.form-success h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.8rem;color:var(--cyan)}
+.form-success p{font-size:.86rem;color:var(--muted);line-height:1.7}
+.portfolio{background:var(--bg)}
+.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.port-card{background:var(--card);border:1px solid var(--border2);overflow:hidden;transition:border-color .4s,transform .4s}
+.port-card:hover{border-color:rgba(37,99,255,.4);transform:translateY(-5px)}
+.port-preview{aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.port-preview-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.port-card:hover .port-preview-bar{transform:scaleX(1)}
+.port-dots{position:absolute;top:.8rem;left:1rem;display:flex;gap:.4rem;z-index:2}
+.port-dot{width:8px;height:8px;border-radius:50%}
+.port-bigtext{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;opacity:.08;line-height:1}
+.port-label{position:absolute;bottom:1rem;left:1rem;right:1rem;padding:.6rem 1rem;font-family:'Syne Mono',monospace;font-size:.62rem;letter-spacing:.15em}
+.port-info{padding:1.8rem}
+.port-tag{font-family:'Syne Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue2);margin-bottom:.5rem}
+.port-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.port-desc{font-size:.77rem;color:var(--muted);line-height:1.6}
+.why{background:var(--surface)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.why-card{padding:2.5rem;border:1px solid var(--border2);transition:border-color .3s,background .3s}
+.why-card:hover{border-color:rgba(37,99,255,.35);background:var(--card)}
+.why-num{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;color:rgba(37,99,255,.06);line-height:1;margin-bottom:-.5rem}
+.why-icon{font-size:1.8rem;margin-bottom:1rem}
+.why-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.6rem}
+.why-desc{font-size:.81rem;color:var(--muted);line-height:1.7}
+.testi{background:var(--bg)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.testi-card{background:var(--card);border:1px solid var(--border2);padding:2.5rem;position:relative;transition:border-color .3s,transform .3s}
+.testi-card:hover{border-color:rgba(37,99,255,.35);transform:translateY(-4px)}
+.testi-stars{color:var(--blue2);font-size:.78rem;letter-spacing:.1em;margin-bottom:1.2rem}
+.testi-text{font-size:.86rem;line-height:1.75;color:rgba(238,242,255,.65);margin-bottom:2rem;font-style:italic}
+.testi-author{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700}
+.testi-role{font-size:.7rem;color:var(--muted);margin-top:.2rem}
+.final-cta{background:var(--surface);text-align:center;position:relative;overflow:hidden}
+.final-cta-glow{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(37,99,255,.05) 0%,transparent 70%)}
+.final-cta-content{position:relative;z-index:2;max-width:800px;margin:0 auto}
+.final-cta-content .s-label{justify-content:center}
+.final-title{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,5vw,5rem);font-weight:800;line-height:.95;margin-bottom:2rem}
+.final-title span{background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.final-sub{font-size:.98rem;color:rgba(238,242,255,.5);margin-bottom:3.5rem;line-height:1.8}
+.final-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem 5rem}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+.footer-brand-name{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.footer-brand-name span{color:var(--blue2)}
+.footer-brand-desc{font-size:.78rem;color:var(--muted);line-height:1.7;max-width:260px;margin-top:.5rem}
+.footer-col-title{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem}
+.footer-col a{display:block;font-size:.76rem;color:var(--muted);text-decoration:none;margin-bottom:.7rem;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:2rem;border-top:1px solid var(--border2);flex-wrap:wrap;gap:1rem}
+.footer-copy{font-family:'Syne Mono',monospace;font-size:.63rem;color:var(--muted);letter-spacing:.06em}
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}.rd5{transition-delay:.5s}
+@media(max-width:1000px){
+  nav,nav.scrolled{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  section{padding:5rem 1.5rem}
+  .hero{padding:0 1.5rem;padding-top:80px}
+  .hero-stats{display:none}
+  .svc-intro,.pricing-grid,.svc-grid,.addons-grid,.why-grid,.testi-grid,.port-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr;gap:2rem}
+  .process-steps::before{display:none}
+  .booking-layout{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:2rem}
+  .footer-bottom{flex-direction:column;text-align:center}
+  footer{padding:3rem 1.5rem}
+  .form-row,.form-checks{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<nav id="mainNav">
+  <div class="nav-brand">
+    <div class="nav-brand-icon">SW</div>
+    <div class="nav-brand-name">Sentinel <span>Web</span> Studio</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#booking">Contact</a></li>
+    <li><a href="#booking" class="nav-cta">Start Project</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="hero-badge-dot"></div><div class="hero-badge-text">Available for new projects · Response within 24hrs</div></div>
+    <h1 class="hero-title">
+      <span class="l1">Websites That</span>
+      <span class="l2">Win Clients</span>
+      <span class="l3">&amp; Make Money.</span>
+    </h1>
+    <p class="hero-sub">I build <strong>stunning, fast, professional websites</strong> for local businesses — barbershops, salons, restaurants, contractors, and more. At a price that actually makes sense.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary"><span>Start Your Project</span></a>
+      <a href="#pricing" class="btn-secondary">See Pricing</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="h-stat"><div class="h-stat-num">48hr</div><div class="h-stat-lbl">Delivery</div></div>
+    <div class="h-stat"><div class="h-stat-num">100%</div><div class="h-stat-lbl">Custom Built</div></div>
+    <div class="h-stat"><div class="h-stat-num">$0</div><div class="h-stat-lbl">Upfront Risk</div></div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="m-item">BARBERSHOPS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">RESTAURANTS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">SALONS &amp; SPAS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">RETAIL STORES</span><span class="m-item m-sep"> ✦ </span><span class="m-item">LAW FIRMS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">CONTRACTORS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">MEDICAL OFFICES</span><span class="m-item m-sep"> ✦ </span><span class="m-item">REAL ESTATE</span><span class="m-item m-sep"> ✦ </span><span class="m-item">GYMS &amp; FITNESS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">BARBERSHOPS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">RESTAURANTS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">SALONS &amp; SPAS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">RETAIL STORES</span><span class="m-item m-sep"> ✦ </span><span class="m-item">LAW FIRMS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">CONTRACTORS</span><span class="m-item m-sep"> ✦ </span><span class="m-item">MEDICAL OFFICES</span><span class="m-item m-sep"> ✦ </span><span class="m-item">REAL ESTATE</span><span class="m-item m-sep"> ✦ </span><span class="m-item">GYMS &amp; FITNESS</span><span class="m-item m-sep"> ✦ </span>
+  </div>
+</div>
+
+<section class="services" id="services">
+  <div class="svc-intro">
+    <div>
+      <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">What I Build</div></div>
+      <h2 class="s-title reveal rd1">Everything Your<br><span>Business Needs</span><br>Online.</h2>
+    </div>
+    <div class="svc-intro-note reveal rd2">Every website is hand-coded from scratch. No templates. No Wix. No Squarespace. Just clean, fast, custom code built specifically for your business and your customers.</div>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card reveal">
+      <div class="svc-icon">⚡</div>
+      <div class="svc-name">Starter Website</div>
+      <div class="svc-desc">Perfect for small businesses that need a clean professional presence online fast.</div>
+      <ul class="svc-feats"><li>Single-page design</li><li>Mobile responsive</li><li>Contact info + map</li><li>Google Maps embed</li><li>Booking link integration</li><li>Delivered in 24 hours</li><li>1 revision round</li></ul>
+      <div class="svc-price-wrap"><div class="svc-from">Starting from</div><div class="svc-amount">$150</div><div class="svc-period">one-time payment</div></div>
+    </div>
+    <div class="svc-card reveal rd1" style="border-color:rgba(37,99,255,.35)">
+      <div class="svc-popular">Most Popular</div>
+      <div class="svc-icon">🚀</div>
+      <div class="svc-name">Business Website</div>
+      <div class="svc-desc">Full multi-section site that showcases your services and drives bookings from day one.</div>
+      <ul class="svc-feats"><li>5–10 custom sections</li><li>Services + pricing page</li><li>Booking / contact form</li><li>Reviews showcase</li><li>SEO optimized</li><li>Animations + effects</li><li>Delivered in 48 hours</li><li>2 revision rounds</li></ul>
+      <div class="svc-price-wrap"><div class="svc-from">Starting from</div><div class="svc-amount">$350</div><div class="svc-period">one-time payment</div></div>
+    </div>
+    <div class="svc-card reveal rd2">
+      <div class="svc-icon">👑</div>
+      <div class="svc-name">Premium Website</div>
+      <div class="svc-desc">Elite-level design with advanced features for businesses that want to stand out completely.</div>
+      <ul class="svc-feats"><li>Custom luxury design</li><li>Multi-page layout</li><li>Online booking system</li><li>Blog or portfolio</li><li>Advanced animations</li><li>Custom domain setup</li><li>60-day support</li><li>Unlimited revisions</li></ul>
+      <div class="svc-price-wrap"><div class="svc-from">Starting from</div><div class="svc-amount">$700+</div><div class="svc-period">one-time payment</div></div>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-icon">🔧</div>
+      <div class="svc-name">Website Maintenance</div>
+      <div class="svc-desc">Keep your site fresh with regular updates, design tweaks, and new content.</div>
+      <ul class="svc-feats"><li>Monthly content updates</li><li>Design improvements</li><li>New sections added</li><li>Performance checks</li><li>Priority support</li></ul>
+      <div class="svc-price-wrap"><div class="svc-from">Starting from</div><div class="svc-amount">$75</div><div class="svc-period">per month</div></div>
+    </div>
+    <div class="svc-card reveal rd1">
+      <div class="svc-icon">🌐</div>
+      <div class="svc-name">Domain + Hosting</div>
+      <div class="svc-desc">Get a real domain name and keep your site live with fast, reliable hosting.</div>
+      <ul class="svc-feats"><li>Domain name setup</li><li>Netlify hosting</li><li>SSL certificate (HTTPS)</li><li>DNS configuration</li><li>Full deployment</li></ul>
+      <div class="svc-price-wrap"><div class="svc-from">Starting from</div><div class="svc-amount">$50</div><div class="svc-period">setup + $12/yr domain</div></div>
+    </div>
+    <div class="svc-card reveal rd2">
+      <div class="svc-icon">📈</div>
+      <div class="svc-name">SEO Optimization</div>
+      <div class="svc-desc">Help your business show up on Google when local customers search for your services.</div>
+      <ul class="svc-feats"><li>Local SEO setup</li><li>Google Business help</li><li>Meta tags + keywords</li><li>Page speed optimization</li><li>Analytics setup</li></ul>
+      <div class="svc-price-wrap"><div class="svc-from">Starting from</div><div class="svc-amount">$100</div><div class="svc-period">one-time</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">Transparent Pricing</div></div>
+  <h2 class="s-title reveal rd1">No Hidden Fees.<br><span>No Surprises.</span><br>Just Results.</h2>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <div class="price-desc">For businesses that need a simple, clean online presence — fast.</div>
+      <div class="price-amount"><div class="price-dollar">$150</div><div class="price-period">one-time</div></div>
+      <div class="price-note">+ $12/yr domain (optional) · Hosting free on Netlify</div>
+      <ul class="price-list">
+        <li>Single-page HTML website</li><li>Mobile responsive design</li><li>Business info, hours, contact</li><li>Google Maps embed</li><li>Booking link integration</li><li>Delivered in 24 hours</li><li>1 free revision round</li>
+        <li class="no">Multi-page layout</li><li class="no">Custom animations</li><li class="no">SEO optimization</li>
+      </ul>
+      <a href="#booking" class="price-cta">Get Started</a>
+    </div>
+    <div class="price-card featured reveal rd1">
+      <div class="price-badge">Most Popular</div>
+      <div class="price-tier">Business</div>
+      <div class="price-desc">The full package for businesses serious about their online presence.</div>
+      <div class="price-amount"><div class="price-dollar">$350</div><div class="price-period">one-time</div></div>
+      <div class="price-note">+ $12/yr domain (optional) · Hosting free on Netlify</div>
+      <ul class="price-list">
+        <li>Full multi-section website</li><li>5–10 custom sections</li><li>Services + pricing page</li><li>Reviews showcase section</li><li>Contact / booking form</li><li>Scroll animations included</li><li>SEO optimization included</li><li>Delivered in 48 hours</li><li>2 free revision rounds</li><li>30-day support</li>
+      </ul>
+      <a href="#booking" class="price-cta">Get Started</a>
+    </div>
+    <div class="price-card reveal rd2">
+      <div class="price-tier">Premium</div>
+      <div class="price-desc">For businesses that want elite design and advanced functionality.</div>
+      <div class="price-amount"><div class="price-dollar">$700+</div><div class="price-period">one-time</div></div>
+      <div class="price-note">+ $12/yr domain (optional) · Hosting free on Netlify</div>
+      <ul class="price-list">
+        <li>Multi-page luxury website</li><li>Custom design direction</li><li>Online booking system</li><li>Blog or portfolio section</li><li>Advanced micro-animations</li><li>Custom domain setup included</li><li>Full SEO package</li><li>Analytics dashboard</li><li>Unlimited revisions</li><li>60-day priority support</li>
+      </ul>
+      <a href="#booking" class="price-cta">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<section class="addons">
+  <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">Add-On Services</div></div>
+  <h2 class="s-title reveal rd1">Power Up Your <span>Website</span></h2>
+  <div class="addons-grid">
+    <div class="addon-card reveal"><div class="addon-icon">🔒</div><div class="addon-name">SSL + HTTPS Setup</div><div class="addon-desc">Secure your site and build trust with every visitor.</div><div class="addon-price">FREE with hosting</div></div>
+    <div class="addon-card reveal rd1"><div class="addon-icon">📊</div><div class="addon-name">Google Analytics</div><div class="addon-desc">Track visitors, clicks, and where your traffic comes from.</div><div class="addon-price">$30 setup</div></div>
+    <div class="addon-card reveal rd2"><div class="addon-icon">📱</div><div class="addon-name">Social Media Links</div><div class="addon-desc">Instagram, TikTok, Facebook — beautifully integrated.</div><div class="addon-price">$25</div></div>
+    <div class="addon-card reveal rd3"><div class="addon-icon">🗺️</div><div class="addon-name">Google Business Setup</div><div class="addon-desc">Show up on Google Maps and local search results.</div><div class="addon-price">$50 setup</div></div>
+    <div class="addon-card reveal"><div class="addon-icon">📝</div><div class="addon-name">Blog Section</div><div class="addon-desc">Keep your site fresh and boost SEO with a clean blog.</div><div class="addon-price">$80</div></div>
+    <div class="addon-card reveal rd1"><div class="addon-icon">🛒</div><div class="addon-name">Online Store (Basic)</div><div class="addon-desc">Sell products directly. Stripe or PayPal integration.</div><div class="addon-price">$200+</div></div>
+    <div class="addon-card reveal rd2"><div class="addon-icon">🖼️</div><div class="addon-name">Photo Gallery</div><div class="addon-desc">Showcase your work with a beautiful responsive gallery.</div><div class="addon-price">$40</div></div>
+    <div class="addon-card reveal rd3"><div class="addon-icon">📧</div><div class="addon-name">Email Newsletter</div><div class="addon-desc">Collect emails and connect to Mailchimp or any platform.</div><div class="addon-price">$60 setup</div></div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">How It Works</div></div>
+  <h2 class="s-title reveal rd1">From Idea to <span>Live Website</span><br>in Days — Not Weeks.</h2>
+  <div class="process-steps">
+    <div class="step reveal"><div class="step-num">01</div><div class="step-title">You Reach Out</div><div class="step-desc">Fill in the project form with your business details and vision.</div></div>
+    <div class="step reveal rd1"><div class="step-num">02</div><div class="step-title">We Discuss</div><div class="step-desc">I review your needs and we talk through design, features, and timeline.</div></div>
+    <div class="step reveal rd2"><div class="step-num">03</div><div class="step-title">I Build</div><div class="step-desc">I design and code your custom website from scratch — no templates.</div></div>
+    <div class="step reveal rd3"><div class="step-num">04</div><div class="step-title">You Review</div><div class="step-desc">I send a live preview. You give feedback, I make revisions.</div></div>
+    <div class="step reveal rd4"><div class="step-num">05</div><div class="step-title">Goes Live</div><div class="step-desc">Your site deploys with your domain. Your business is officially online.</div></div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">Recent Work</div></div>
+  <h2 class="s-title reveal rd1">Built from Scratch.<br><span>Zero Templates.</span></h2>
+  <div class="port-grid">
+    <div class="port-card reveal">
+      <div class="port-preview" style="background:linear-gradient(135deg,#0a0a0a,#141414)">
+        <div class="port-preview-bar"></div>
+        <div class="port-dots"><div class="port-dot" style="background:#ff5f57"></div><div class="port-dot" style="background:#febc2e"></div><div class="port-dot" style="background:#28c840"></div></div>
+        <div class="port-bigtext" style="color:rgba(201,168,76,.12)">4L</div>
+        <div class="port-label" style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);font-family:'Syne Mono',monospace;font-size:.6rem;color:rgba(201,168,76,.8);letter-spacing:.15em">4LIFECUTZZ BARBERSHOP</div>
+      </div>
+      <div class="port-info"><div class="port-tag">Barbershop · Luxury Dark Theme</div><div class="port-name">4Lifecutzz Barbershop</div><div class="port-desc">Gold &amp; black luxury site with real Booksy pricing, reviews, and booking integration. Owings Mills, MD.</div></div>
+    </div>
+    <div class="port-card reveal rd1">
+      <div class="port-preview" style="background:linear-gradient(135deg,#0d0f0e,#141714)">
+        <div class="port-preview-bar" style="background:linear-gradient(90deg,#4caf6e,#6dd98a)"></div>
+        <div class="port-dots"><div class="port-dot" style="background:#ff5f57"></div><div class="port-dot" style="background:#febc2e"></div><div class="port-dot" style="background:#28c840"></div></div>
+        <div class="port-bigtext" style="color:rgba(76,175,110,.1)">OMW</div>
+        <div class="port-label" style="background:rgba(76,175,110,.08);border:1px solid rgba(76,175,110,.15);font-family:'Syne Mono',monospace;font-size:.6rem;color:rgba(76,175,110,.8);letter-spacing:.15em">OMWCUTZ BARBERSHOP</div>
+      </div>
+      <div class="port-info"><div class="port-tag">Barbershop · Urban Green Theme</div><div class="port-name">OmwCutz Barbershop</div><div class="port-desc">Dark forest green neighborhood barbershop. Walk-in focused, family friendly. Owings Mills, MD.</div></div>
+    </div>
+    <div class="port-card reveal rd2">
+      <div class="port-preview" style="background:linear-gradient(135deg,#03050a,#080d16)">
+        <div class="port-preview-bar" style="background:linear-gradient(90deg,#2563ff,#00d4ff)"></div>
+        <div class="port-dots"><div class="port-dot" style="background:#ff5f57"></div><div class="port-dot" style="background:#febc2e"></div><div class="port-dot" style="background:#28c840"></div></div>
+        <div class="port-bigtext" style="color:rgba(37,99,255,.1)">SW</div>
+        <div class="port-label" style="background:rgba(37,99,255,.08);border:1px solid rgba(37,99,255,.15);font-family:'Syne Mono',monospace;font-size:.6rem;color:rgba(100,150,255,.8);letter-spacing:.15em">SENTINEL WEB STUDIO</div>
+      </div>
+      <div class="port-info"><div class="port-tag">Agency · Tech Blue Theme</div><div class="port-name">Sentinel Web Studio</div><div class="port-desc">This very website — a showcase of what's possible. Full booking system, pricing, and portfolio.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">Why Choose Me</div></div>
+  <h2 class="s-title reveal rd1">Not Just a Website.<br><span>A Business Asset.</span></h2>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-num">01</div><div class="why-icon">⚡</div><div class="why-title">Lightning Fast Delivery</div><div class="why-desc">Starter sites in 24 hours. Full business sites in 48 hours. You won't wait months for your website.</div></div>
+    <div class="why-card reveal rd1"><div class="why-num">02</div><div class="why-icon">✂️</div><div class="why-title">100% Custom Built</div><div class="why-desc">Every site is hand-coded from scratch. No Wix. No Squarespace. No templates. Unique — just like your business.</div></div>
+    <div class="why-card reveal rd2"><div class="why-num">03</div><div class="why-icon">💰</div><div class="why-title">Prices That Make Sense</div><div class="why-desc">Agencies charge $3,000–$10,000 for the same work. I charge a fraction of that — same quality, faster, more personal.</div></div>
+    <div class="why-card reveal"><div class="why-num">04</div><div class="why-icon">📱</div><div class="why-title">Mobile-First Design</div><div class="why-desc">Over 70% of your customers view on phones. Every site I build looks perfect on every device.</div></div>
+    <div class="why-card reveal rd1"><div class="why-num">05</div><div class="why-icon">🔍</div><div class="why-title">Built to Be Found</div><div class="why-desc">Clean SEO-optimized code and proper meta tags so Google can find and rank your business in local search.</div></div>
+    <div class="why-card reveal rd2"><div class="why-num">06</div><div class="why-icon">🤝</div><div class="why-title">You Own Everything</div><div class="why-desc">Your code, your domain, your hosting — all yours. No lock-in contracts. No platform fees. Yours completely.</div></div>
+  </div>
+</section>
+
+<section class="testi">
+  <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">Client Love</div></div>
+  <h2 class="s-title reveal rd1">What Businesses <span>Say About</span><br>Working With Me.</h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal"><div class="testi-stars">★★★★★</div><p class="testi-text">"I had no idea a website could look this good. He built the entire thing in under 48 hours, added all my pricing and reviews, and now customers actually find me online. Worth every penny."</p><div class="testi-author">Lee · 4Lifecutzz Barbershop</div><div class="testi-role">Owings Mills, MD</div></div>
+    <div class="testi-card reveal rd1"><div class="testi-stars">★★★★★</div><p class="testi-text">"Fast, professional, and the design was exactly what I wanted. He took time to understand my business before building anything. The site looks better than shops that paid 10x more."</p><div class="testi-author">Local Business Owner</div><div class="testi-role">Baltimore, MD</div></div>
+    <div class="testi-card reveal rd2"><div class="testi-stars">★★★★★</div><p class="testi-text">"I was skeptical because the price seemed too good — but the quality blew me away. My site has animations, my actual Google reviews, and a custom look nobody else has."</p><div class="testi-author">Salon Owner</div><div class="testi-role">Owings Mills, MD</div></div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="booking-layout">
+    <div>
+      <div class="s-label reveal"><div class="s-label-bar"></div><div class="s-label-txt">Start Your Project</div></div>
+      <h2 class="s-title reveal rd1">Let's Build <span>Your Website.</span></h2>
+      <p class="booking-info-desc reveal rd2">Tell me about your business. I'll review your request, reach out within 24 hours, and we'll talk through everything before I start building anything.</p>
+      <ul class="booking-feats reveal rd3">
+        <li><div class="bf-icon">💬</div><div><div class="bf-title">Free Consultation</div><div class="bf-txt">We discuss your vision and goals before any payment.</div></div></li>
+        <li><div class="bf-icon">🎨</div><div><div class="bf-title">You Guide the Design</div><div class="bf-txt">Tell me your colors, vibe, and style — I build around your brand.</div></div></li>
+        <li><div class="bf-icon">✅</div><div><div class="bf-title">See It Before You Pay</div><div class="bf-txt">Live preview first. You only pay when you're happy.</div></div></li>
+        <li><div class="bf-icon">🔁</div><div><div class="bf-title">Revisions Included</div><div class="bf-txt">Every package includes revision rounds so we get it exactly right.</div></div></li>
+      </ul>
+    </div>
+    <div class="form-wrap reveal rd2">
+      <div id="projectForm">
+        <div class="form-title">Start Your Project</div>
+        <div class="form-sub">Fill this out — I'll respond within 24 hours.</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Your Name *</label><input type="text" class="form-input" id="fname" placeholder="John Smith"></div>
+          <div class="form-group"><label class="form-label">Business Name *</label><input type="text" class="form-input" id="bname" placeholder="Joe's Barbershop"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Email Address *</label><input type="email" class="form-input" id="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" id="phone" placeholder="(443) 000-0000"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Business Type *</label><select class="form-select" id="btype"><option value="">Select your industry...</option><option>Barbershop / Hair Salon</option><option>Restaurant / Cafe</option><option>Retail Store</option><option>Law Firm</option><option>Medical / Dental Office</option><option>Contractor / Home Services</option><option>Fitness / Gym</option><option>Real Estate</option><option>Beauty / Spa</option><option>Other</option></select></div>
+        <div class="form-group"><label class="form-label">Package You're Interested In</label><select class="form-select" id="pkg"><option value="">Select a package...</option><option>Starter — $150 (24hr delivery)</option><option>Business — $350 (48hr delivery) ⭐ Popular</option><option>Premium — $700+ (Advanced features)</option><option>Monthly Maintenance — $75/mo</option><option>Not sure — help me decide</option></select></div>
+        <div class="form-group"><label class="form-label">Features You Want</label>
+          <div class="form-checks">
+            <div class="check-item"><input type="checkbox" id="c1"><label for="c1">Online Booking System</label></div>
+            <div class="check-item"><input type="checkbox" id="c2"><label for="c2">Services + Pricing Page</label></div>
+            <div class="check-item"><input type="checkbox" id="c3"><label for="c3">Photo Gallery</label></div>
+            <div class="check-item"><input type="checkbox" id="c4"><label for="c4">Reviews Section</label></div>
+            <div class="check-item"><input type="checkbox" id="c5"><label for="c5">Contact / Quote Form</label></div>
+            <div class="check-item"><input type="checkbox" id="c6"><label for="c6">Google Maps Embed</label></div>
+            <div class="check-item"><input type="checkbox" id="c7"><label for="c7">Social Media Links</label></div>
+            <div class="check-item"><input type="checkbox" id="c8"><label for="c8">SEO Optimization</label></div>
+            <div class="check-item"><input type="checkbox" id="c9"><label for="c9">Blog Section</label></div>
+            <div class="check-item"><input type="checkbox" id="c10"><label for="c10">Online Store</label></div>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Describe Your Vision</label><textarea class="form-textarea" id="vision" placeholder="What should your website look and feel like? Colors, vibe, examples you love, anything specific you want..."></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Do you have a domain?</label><select class="form-select" id="domain"><option>No — I need help getting one</option><option>Yes — I have a domain already</option><option>Not sure what a domain is</option></select></div>
+          <div class="form-group"><label class="form-label">Budget Range</label><select class="form-select" id="budget"><option>$100 – $200</option><option>$200 – $400</option><option>$400 – $700</option><option>$700+</option><option>Flexible — just get it right</option></select></div>
+        </div>
+        <button class="form-submit" onclick="handleSubmit()"><span>Send My Project Request →</span></button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">🚀</div>
+        <h3>Request Received!</h3>
+        <p>Got your details! I'll reach out within <strong>24 hours</strong> to discuss your vision and next steps. Get ready — your business is about to look incredible online.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="final-cta-glow"></div>
+  <div class="final-cta-content">
+    <div class="s-label reveal" style="justify-content:center"><div class="s-label-bar"></div><div class="s-label-txt">Ready?</div></div>
+    <div class="final-title reveal rd1">Your Business <span>Deserves</span><br>to Be Found Online.</div>
+    <p class="final-sub reveal rd2">Every day without a website is a day your competitors are getting customers that should be yours. Let's fix that — fast.</p>
+    <div class="final-btns reveal rd3">
+      <a href="#booking" class="btn-primary"><span>Start My Website Today</span></a>
+      <a href="#pricing" class="btn-secondary">View All Pricing</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Sentinel <span>Web</span> Studio</div>
+      <div class="footer-brand-desc">Professional web design for local businesses. Custom-built, fast-delivered, and fairly priced. Based in Owings Mills, MD — serving businesses everywhere.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Services</div>
+      <a href="#services">Starter Website</a><a href="#services">Business Website</a><a href="#services">Premium Website</a><a href="#services">Maintenance</a><a href="#services">SEO Setup</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Pricing</div>
+      <a href="#pricing">Starter — $150</a><a href="#pricing">Business — $350</a><a href="#pricing">Premium — $700+</a><a href="#pricing">Add-Ons</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Contact</div>
+      <a href="#booking">Start a Project</a><a href="https://www.fiverr.com" target="_blank">Fiverr Profile</a><a href="mailto:bisade@sentinelwebstudio.com">Email Me</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Sentinel Web Studio · Owings Mills, MD · All rights reserved.</div>
+    <div class="footer-copy">Hand-coded with ❤️ · No templates. Ever.</div>
+  </div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},90);});
+document.querySelectorAll('a,button,input,select,textarea,.check-item').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px';});el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px';});});
+const nav=document.getElementById('mainNav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+function handleSubmit(){
+  const n=document.getElementById('fname').value,b=document.getElementById('bname').value,em=document.getElementById('email').value;
+  if(!n||!b||!em){alert('Please fill in your name, business name, and email.');return;}
+  document.getElementById('projectForm').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+  document.getElementById('booking').scrollIntoView({behavior:'smooth'});
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
+HTMLEOF
+echo "done"
+Taking longer than usual. Trying again shortly (attempt 2 of 10)
+
+
+
+
+
